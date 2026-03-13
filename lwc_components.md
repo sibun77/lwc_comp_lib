@@ -6,6 +6,15 @@ This documentation will grow over time as more reusable components are added.
 
 ---
 
+# 📚 Component Index
+
+| # | Component | Description |
+|---|---|---|
+| 1 | [WebCam Image Capture Component](#1️⃣-lwc-webcam-image-capture-component-) | Capture images directly from the user's webcam using MediaDevices API |
+| 2 | [Dependent Picklist Component](#2️⃣-lwc-dependent-picklist-component-) | Dynamic Country → State → City dependent picklist |
+
+---
+
 # 1️⃣ LWC WebCam Image Capture Component 📸
 
 | Property | Value |
