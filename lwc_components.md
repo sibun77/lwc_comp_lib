@@ -10,13 +10,160 @@ This documentation will grow over time as more reusable components are added.
 
 | # | Component | Description |
 |---|---|---|
-| 1 | [WebCam Image Capture Component](#1️⃣-lwc-webcam-image-capture-component-) | Capture images directly from the user's webcam using MediaDevices API |
-| 2 | [Dependent Picklist Component](#2️⃣-lwc-dependent-picklist-component-) | Dynamic Country → State → City dependent picklist |
-| 3 | [Multi Step Progress Form](#3️⃣-lwc-multi-step-progress-form-) | Step based UI workflow using Lightning Progress Indicator |
+| 1 | [Parent → Child Communication Component](#1️⃣-lwc-parent-child-communication-component-) | Demonstrates data passing between parent and child components using @api |
+| 2 | [WebCam Image Capture Component](#2️⃣-lwc-webcam-image-capture-component-) | Capture images directly from the user's webcam using MediaDevices API |
+| 3 | [Dependent Picklist Component](#3️⃣-lwc-dependent-picklist-component-) | Dynamic Country → State → City dependent picklist |
+| 4 | [Multi Step Progress Form](#4️⃣-lwc-multi-step-progress-form-) | Step based UI workflow using Lightning Progress Indicator |
 
 ---
 
-# 1️⃣ LWC WebCam Image Capture Component 📸
+
+# 1 LWC Parent Child Communication Component 🔗
+
+| Property | Value |
+|--------|--------|
+| **Component Name** | `testContComp` |
+| **Category** | Component Communication |
+| **Type** | Utility / Learning Component |
+| **Description** | Demonstrates two common patterns for communication between Lightning Web Components: passing data to a child using `@api` properties and directly accessing a child component using `querySelector`. |
+
+---
+
+# 🚀 Use Cases
+
+This component demonstrates useful Salesforce UI interaction patterns:
+
+- **Parent → Child Data Passing**  
+  Pass data dynamically using component attributes.
+
+- **Imperative Child Method Access**  
+  Use `querySelector` to interact with a child component directly.
+
+- **Dynamic UI Updates**  
+  Update multiple child components from a single parent input.
+
+- **Reusable Form Components**  
+  Share input data across multiple UI blocks.
+
+---
+
+# 🛠 Implementation
+
+## Parent Component
+
+### HTML Template  
+`testContComp.html`
+
+```html
+<template>
+    <lightning-card title="Parent Component">
+        <div class="slds-grid slds-m-around_medium">
+            <div class="slds-col slds-m-around_small">
+                <lightning-input type="text"
+                                 label="Enter Name"
+                                 value={inputText}
+                                 onchange={handleChange}>
+                </lightning-input>
+                <button class="slds-button slds-button_brand slds-m-top_small"
+                        onclick={sendToChild2}>
+                    Submit
+                </button>
+            </div>
+            <div class="slds-col slds-m-around_small">
+                <c-test-child-comp name={inputText}></c-test-child-comp>
+            </div>
+            <div class="slds-col slds-m-around_small">
+                <c-test-child-two-comp></c-test-child-two-comp>
+            </div>
+        </div>
+    </lightning-card>
+</template>
+```
+
+---
+
+### JavaScript Controller  
+`testContComp.js`
+
+```javascript
+import { LightningElement } from 'lwc';
+export default class TestContComp extends LightningElement {
+    inputText = 'Sibun';
+    handleChange(event){
+        this.inputText = event.target.value;
+    }
+    sendToChild2(){
+        let childComp = this.template.querySelector('c-test-child-two-comp');
+        childComp.name = this.inputText;
+    }
+}
+```
+
+---
+
+# Child Components
+
+## Child Component 1 (Property Binding)
+
+### HTML  
+`testChildComp.html`
+
+```html
+<template>
+    <lightning-card title="Child Component2">
+        <div class="slds-m-left_small">
+            Hello, {name}!
+        </div>
+    </lightning-card>
+</template>
+```
+
+### JavaScript  
+`testChildComp.js`
+
+```javascript
+import { LightningElement, api } from 'lwc';
+
+export default class TestChildComp extends LightningElement {
+    @api name;
+}
+```
+
+---
+
+## Child Component 2 (Imperative Access)
+
+### HTML  
+`testChildTwoComp.html`
+
+```html
+<template>
+    <lightning-card title="Child Component">
+        <div class="slds-m-left_small">
+            Hello, {name}!
+        </div>
+    </lightning-card>
+</template>
+```
+
+### JavaScript  
+`testChildTwoComp.js`
+
+```javascript
+import { LightningElement, api } from 'lwc';
+
+export default class TestChildTwoComp extends LightningElement {
+    @api name = '';
+}
+```
+
+---
+
+# 📷 Component Preview
+
+![Parent Child Communication LWC](./images/parent_child_communication_lwc.png)
+
+# 2 LWC WebCam Image Capture Component 📸
 
 | Property | Value |
 |--------|--------|
@@ -125,7 +272,7 @@ export default class WebCamImageLwc extends LightningElement {
 ### 📷 Component Preview
 ![Image Capturing Lwc Component](./images/image_capture_lwc.png)
 
-# 2️⃣ LWC Dependent Picklist Component 🌍
+# 3 LWC Dependent Picklist Component 🌍
 
 | Property | Value |
 |--------|--------|
@@ -286,7 +433,7 @@ public with sharing class locationController {
 
 ![Dependent Picklist LWC](./images/dependent_picklist_lwc.png)
 
-# 3️⃣ LWC Multi Step Progress Form 🧭
+# 4 LWC Multi Step Progress Form 🧭
 
 | Property | Value |
 |--------|--------|
