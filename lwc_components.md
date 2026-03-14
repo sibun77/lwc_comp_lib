@@ -10,14 +10,15 @@ This documentation will grow over time as more reusable components are added.
 
 | # | Component | Description |
 |---|---|---|
-| 1 | [Parent → Child Communication Component](#1️⃣-lwc-parent-child-communication-component-) | Demonstrates data passing between parent and child components using @api |
-| 2 | [WebCam Image Capture Component](#2️⃣-lwc-webcam-image-capture-component-) | Capture images directly from the user's webcam using MediaDevices API |
-| 3 | [Dependent Picklist Component](#3️⃣-lwc-dependent-picklist-component-) | Dynamic Country → State → City dependent picklist |
-| 4 | [Multi Step Progress Form](#4️⃣-lwc-multi-step-progress-form-) | Step based UI workflow using Lightning Progress Indicator |
+| 1 | [Parent → Child Communication Component](#1-lwc-parent-child-communication-component-) | Demonstrates data passing between parent and child components using @api |
+| 2 | [Child → Parent Communication (Custom Event)](#2-lwc-child-parent-communication-custom-event-) | Demonstrates sending data from child to parent using CustomEvent |
+| 3 | [WebCam Image Capture Component](#3-lwc-webcam-image-capture-component-) | Capture images directly from the user's webcam using MediaDevices API |
+| 4 | [Dependent Picklist Component](#4-lwc-dependent-picklist-component-) | Dynamic Country → State → City dependent picklist |
+| 5 | [Multi Step Progress Form](#5-lwc-multi-step-progress-form-) | Step based UI workflow using Lightning Progress Indicator |
 
 ---
 
-
+---
 # 1 LWC Parent Child Communication Component 🔗
 
 | Property | Value |
@@ -59,13 +60,9 @@ This component demonstrates useful Salesforce UI interaction patterns:
     <lightning-card title="Parent Component">
         <div class="slds-grid slds-m-around_medium">
             <div class="slds-col slds-m-around_small">
-                <lightning-input type="text"
-                                 label="Enter Name"
-                                 value={inputText}
-                                 onchange={handleChange}>
+                <lightning-input type="text" label="Enter Name" value={inputText} onchange={handleChange}>
                 </lightning-input>
-                <button class="slds-button slds-button_brand slds-m-top_small"
-                        onclick={sendToChild2}>
+                <button class="slds-button slds-button_brand slds-m-top_small" onclick={sendToChild2}>
                     Submit
                 </button>
             </div>
@@ -163,7 +160,127 @@ export default class TestChildTwoComp extends LightningElement {
 
 ![Parent Child Communication LWC](./images/parent_child_communication_lwc.png)
 
-# 2 LWC WebCam Image Capture Component 📸
+---
+
+# 2 LWC Child → Parent Communication (Custom Event) 🔄
+
+| Property | Value |
+|--------|--------|
+| **Component Name** | `customEventParent` |
+| **Category** | Component Communication |
+| **Type** | Utility / Learning Component |
+| **Description** | Demonstrates how a child component can send data back to its parent using a CustomEvent. This pattern is widely used in Lightning Web Components for upward data flow. |
+
+---
+
+# 🚀 Use Cases
+
+This component demonstrates common interaction patterns in Salesforce UI:
+
+- **Child → Parent Data Communication**
+- **Form Submission Handling**
+- **Reusable Input Components**
+- **Dynamic UI Updates Based on Child Events**
+
+Example scenarios:
+
+- Form components sending data to a parent container  
+- Modal components returning selected values  
+- Reusable input components notifying parent components  
+
+---
+
+# 🛠 Implementation
+
+## Parent Component
+
+### HTML Template  
+`customEventParent.html`
+
+```html
+<template>
+    <lightning-card>
+        <div class="slds-grid slds-m-around_medium">
+            <div class="slds-col slds-m-around_small">
+                <lightning-card title="Parent Component">
+                    <div class="slds-m-left_small">
+                        Hello, {name}!
+                    </div>
+                </lightning-card>
+            </div>
+            <div class="slds-col slds-m-around_small">
+                <c-custom-event-child onchildevt={handleChildEvent}></c-custom-event-child>
+            </div>
+        </div>
+    </lightning-card>
+</template>
+```
+
+---
+
+### JavaScript Controller  
+`customEventParent.js`
+
+```javascript
+import { LightningElement } from 'lwc';
+
+export default class CoustomEventParent extends LightningElement {
+    name = '';
+    handleChildEvent(event){
+        this.name = event.detail;
+    }
+}
+```
+
+---
+
+# Child Component
+
+### HTML Template  
+`customEventChild.html`
+
+```html
+<template>
+    <lightning-card title="Child Component">
+        <div class="slds-col slds-m-around_small">
+            <lightning-input type="text" label="Enter Name" value={inputText} onchange={handleChange}>
+            </lightning-input>
+            <button class="slds-button slds-button_brand slds-m-top_small" onclick={sendToParent}>
+                Submit
+            </button>
+        </div>
+    </lightning-card>
+</template>
+```
+
+---
+
+### JavaScript Controller  
+`customEventChild.js`
+
+```javascript
+import { LightningElement } from 'lwc';
+
+export default class CustomEventChild extends LightningElement {
+    name = '';
+    handleChange(event){
+        this.name = event.target.value;
+    }
+    sendToParent(){
+        let evt = new CustomEvent('childevt', {
+            detail: this.name
+        });
+        this.dispatchEvent(evt);
+    }
+}
+```
+
+---
+
+# 📷 Component Preview
+
+![Custom Event Communication LWC](./images/custom_event_lwc.png)
+# 3 LWC WebCam Image Capture Component 📸
 
 | Property | Value |
 |--------|--------|
@@ -272,7 +389,8 @@ export default class WebCamImageLwc extends LightningElement {
 ### 📷 Component Preview
 ![Image Capturing Lwc Component](./images/image_capture_lwc.png)
 
-# 3 LWC Dependent Picklist Component 🌍
+---
+# 4 LWC Dependent Picklist Component 🌍
 
 | Property | Value |
 |--------|--------|
@@ -433,7 +551,7 @@ public with sharing class locationController {
 
 ![Dependent Picklist LWC](./images/dependent_picklist_lwc.png)
 
-# 4 LWC Multi Step Progress Form 🧭
+# 5 LWC Multi Step Progress Form 🧭
 
 | Property | Value |
 |--------|--------|
