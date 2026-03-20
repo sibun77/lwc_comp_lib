@@ -6,20 +6,20 @@ This documentation will grow over time as more reusable components are added.
 
 ---
 
-# 📚 Component Index
+## 📚 Component Index
 
 | # | Component | Description |
 |---|---|---|
-| 1 | [Parent → Child Communication Component](#1-lwc-parent-child-communication-component-) | Demonstrates data passing between parent and child components using @api |
-| 2 | [Child → Parent Communication (Custom Event)](#2-lwc-child-parent-communication-custom-event-) | Demonstrates sending data from child to parent using CustomEvent |
-| 3 | [WebCam Image Capture Component](#3-lwc-webcam-image-capture-component-) | Capture images directly from the user's webcam using MediaDevices API |
-| 4 | [Dependent Picklist Component](#4-lwc-dependent-picklist-component-) | Dynamic Country → State → City dependent picklist |
-| 5 | [Multi Step Progress Form](#5-lwc-multi-step-progress-form-) | Step based UI workflow using Lightning Progress Indicator |
+| 1 | [Parent → Child Communication Component](#1-parent--child-communication-component) | Demonstrates data passing between parent and child components using @api |
+| 2 | [Child → Parent Communication (Custom Event)](#2-child--parent-communication-custom-event) | Demonstrates sending data from child to parent using CustomEvent |
+| 3 | [Lightning Message Service Communication](#3-lightning-message-service-communication) | Cross-component communication using Lightning Message Service (LMS) |
+| 4 | [WebCam Image Capture Component](#4-webcam-image-capture-component) | Capture images directly from the user's webcam using MediaDevices API |
+| 5 | [Dependent Picklist Component](#5-dependent-picklist-component) | Dynamic Country → State → City dependent picklist |
+| 6 | [Multi Step Progress Form](#6-multi-step-progress-form) | Step based UI workflow using Lightning Progress Indicator |
 
 ---
 
----
-# 1 LWC Parent Child Communication Component 🔗
+## 1. Parent → Child Communication Component
 
 | Property | Value |
 |--------|--------|
@@ -28,32 +28,16 @@ This documentation will grow over time as more reusable components are added.
 | **Type** | Utility / Learning Component |
 | **Description** | Demonstrates two common patterns for communication between Lightning Web Components: passing data to a child using `@api` properties and directly accessing a child component using `querySelector`. |
 
----
+### Use Cases
 
-# 🚀 Use Cases
+- **Parent → Child Data Passing** — Pass data dynamically using component attributes.
+- **Imperative Child Method Access** — Use `querySelector` to interact with a child component directly.
+- **Dynamic UI Updates** — Update multiple child components from a single parent input.
+- **Reusable Form Components** — Share input data across multiple UI blocks.
 
-This component demonstrates useful Salesforce UI interaction patterns:
+### Implementation
 
-- **Parent → Child Data Passing**  
-  Pass data dynamically using component attributes.
-
-- **Imperative Child Method Access**  
-  Use `querySelector` to interact with a child component directly.
-
-- **Dynamic UI Updates**  
-  Update multiple child components from a single parent input.
-
-- **Reusable Form Components**  
-  Share input data across multiple UI blocks.
-
----
-
-# 🛠 Implementation
-
-## Parent Component
-
-### HTML Template  
-`testContComp.html`
+#### Parent — `testContComp.html`
 
 ```html
 <template>
@@ -77,10 +61,7 @@ This component demonstrates useful Salesforce UI interaction patterns:
 </template>
 ```
 
----
-
-### JavaScript Controller  
-`testContComp.js`
+#### Parent — `testContComp.js`
 
 ```javascript
 import { LightningElement } from 'lwc';
@@ -96,14 +77,7 @@ export default class TestContComp extends LightningElement {
 }
 ```
 
----
-
-# Child Components
-
-## Child Component 1 (Property Binding)
-
-### HTML  
-`testChildComp.html`
+#### Child 1 (Property Binding) — `testChildComp.html`
 
 ```html
 <template>
@@ -115,8 +89,7 @@ export default class TestContComp extends LightningElement {
 </template>
 ```
 
-### JavaScript  
-`testChildComp.js`
+#### Child 1 — `testChildComp.js`
 
 ```javascript
 import { LightningElement, api } from 'lwc';
@@ -126,12 +99,7 @@ export default class TestChildComp extends LightningElement {
 }
 ```
 
----
-
-## Child Component 2 (Imperative Access)
-
-### HTML  
-`testChildTwoComp.html`
+#### Child 2 (Imperative Access) — `testChildTwoComp.html`
 
 ```html
 <template>
@@ -143,8 +111,7 @@ export default class TestChildComp extends LightningElement {
 </template>
 ```
 
-### JavaScript  
-`testChildTwoComp.js`
+#### Child 2 — `testChildTwoComp.js`
 
 ```javascript
 import { LightningElement, api } from 'lwc';
@@ -154,15 +121,13 @@ export default class TestChildTwoComp extends LightningElement {
 }
 ```
 
----
-
-# 📷 Component Preview
+### Preview
 
 ![Parent Child Communication LWC](./images/parent_child_communication_lwc.png)
 
 ---
 
-# 2 LWC Child → Parent Communication (Custom Event) 🔄
+## 2. Child → Parent Communication (Custom Event)
 
 | Property | Value |
 |--------|--------|
@@ -171,31 +136,16 @@ export default class TestChildTwoComp extends LightningElement {
 | **Type** | Utility / Learning Component |
 | **Description** | Demonstrates how a child component can send data back to its parent using a CustomEvent. This pattern is widely used in Lightning Web Components for upward data flow. |
 
----
+### Use Cases
 
-# 🚀 Use Cases
+- **Child → Parent Data Communication** — Send input values up to the parent.
+- **Form Submission Handling** — Trigger parent-level logic from child actions.
+- **Reusable Input Components** — Notify parent components of changes.
+- **Dynamic UI Updates** — Update parent state based on child events.
 
-This component demonstrates common interaction patterns in Salesforce UI:
+### Implementation
 
-- **Child → Parent Data Communication**
-- **Form Submission Handling**
-- **Reusable Input Components**
-- **Dynamic UI Updates Based on Child Events**
-
-Example scenarios:
-
-- Form components sending data to a parent container  
-- Modal components returning selected values  
-- Reusable input components notifying parent components  
-
----
-
-# 🛠 Implementation
-
-## Parent Component
-
-### HTML Template  
-`customEventParent.html`
+#### Parent — `customEventParent.html`
 
 ```html
 <template>
@@ -216,10 +166,7 @@ Example scenarios:
 </template>
 ```
 
----
-
-### JavaScript Controller  
-`customEventParent.js`
+#### Parent — `customEventParent.js`
 
 ```javascript
 import { LightningElement } from 'lwc';
@@ -232,12 +179,7 @@ export default class CoustomEventParent extends LightningElement {
 }
 ```
 
----
-
-# Child Component
-
-### HTML Template  
-`customEventChild.html`
+#### Child — `customEventChild.html`
 
 ```html
 <template>
@@ -253,10 +195,7 @@ export default class CoustomEventParent extends LightningElement {
 </template>
 ```
 
----
-
-### JavaScript Controller  
-`customEventChild.js`
+#### Child — `customEventChild.js`
 
 ```javascript
 import { LightningElement } from 'lwc';
@@ -275,12 +214,136 @@ export default class CustomEventChild extends LightningElement {
 }
 ```
 
----
-
-# 📷 Component Preview
+### Preview
 
 ![Custom Event Communication LWC](./images/custom_event_lwc.png)
-# 3 LWC WebCam Image Capture Component 📸
+
+---
+
+## 3. Lightning Message Service Communication
+
+| Property | Value |
+|--------|--------|
+| **Component Name** | `pubLWC`, `subLWC` |
+| **Category** | Component Communication |
+| **Type** | Utility / Advanced Communication |
+| **Description** | Demonstrates communication between unrelated components using Lightning Message Service (LMS). This allows components to exchange data without a direct parent-child relationship. |
+
+### Use Cases
+
+- **Unrelated Component Communication** — Connect components with no shared DOM hierarchy.
+- **Cross DOM Messaging** — Send messages across different parts of the page.
+- **App-wide Event Handling** — Broadcast global notifications.
+- **Decoupled Component Architecture** — Keep components independent while still reactive.
+
+### Implementation
+
+#### Publisher — `pubLWC.html`
+
+```html
+<template>
+    <lightning-card title="Publisher Component" variant="base">
+        <div class="slds-m-around_small">
+            <lightning-input
+                type="text"
+                label="Enter Message"
+                value={value}
+                onchange={HandleChange}>
+            </lightning-input>
+            <button
+                class="slds-button slds-button_success slds-m-top_small"
+                onclick={handleMessageSend}>
+                Send Message
+            </button>
+        </div>
+    </lightning-card>
+</template>
+```
+
+#### Publisher — `pubLWC.js`
+
+```javascript
+import { LightningElement, track, wire } from 'lwc';
+import { publish, MessageContext } from "lightning/messageService";
+import COUNTING_UPDATED_CHANNEL from '@salesforce/messageChannel/Counting_Update__c';
+
+export default class PubLWC extends LightningElement {
+    @wire(MessageContext) messageContext;
+    @track value;
+
+    HandleChange(event) {
+        this.value = event.target.value; 
+    }
+    handleMessageSend(){
+        const payload = {
+            field: 'msg',
+            constant: this.value
+        };
+        publish(this.messageContext, COUNTING_UPDATED_CHANNEL, payload);
+    }
+}
+```
+
+#### Subscriber — `subLWC.html`
+
+```html
+<template>
+    <lightning-card title="Subscriber Component" variant="base">
+        <p class="slds-m-around_small">
+            Message: {msg}
+        </p>
+    </lightning-card>
+</template>
+```
+
+#### Subscriber — `subLWC.js`
+
+```javascript
+import { LightningElement, wire } from 'lwc';
+import { subscribe, MessageContext } from 'lightning/messageService';
+import COUNTING_UPDATED_CHANNEL from '@salesforce/messageChannel/Counting_Update__c';
+
+export default class SubLWC extends LightningElement {
+    subscription = null;
+    @wire(MessageContext) messageContext;
+    msg;
+
+    connectedCallback() {
+        this.subscribeToMessageChannel();
+    }
+    subscribeToMessageChannel() {
+        this.subscription = subscribe(
+            this.messageContext,
+            COUNTING_UPDATED_CHANNEL,
+            (message) => this.handleMessage(message)
+        );
+    }
+    handleMessage(message) {
+        if (message.field === 'msg') {
+            this.msg = message.constant;
+        }
+    }
+}
+```
+
+#### Message Channel — `Counting_Update__c.messageChannel-meta.xml`
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningMessageChannel xmlns="http://soap.sforce.com/2006/04/metadata">
+    <masterLabel>Component Communication Channel</masterLabel>
+    <isExposed>true</isExposed>
+    <description>Channel for communication between ComponentA and ComponentB</description>
+</LightningMessageChannel>
+```
+
+### Preview
+
+![Lightning Message Service LWC](./images/lms_component_lwc.png)
+
+---
+
+## 4. WebCam Image Capture Component
 
 | Property | Value |
 |--------|--------|
@@ -289,30 +352,16 @@ export default class CustomEventChild extends LightningElement {
 | **Type** | Utility Component |
 | **Description** | A reusable Lightning Web Component that interfaces with the browser MediaDevices API to stream video and capture still images directly inside Salesforce UI. |
 
----
+### Use Cases
 
-## 🚀 Use Cases
+- **Field Service** — Capture equipment or site photos on the go.
+- **Identity Verification** — Quickly capture a user photo for validation.
+- **Case Documentation** — Attach real-time images to a Case or Lead.
+- **Inspection Systems** — Capture product condition images.
 
-This component can be used in multiple real-world Salesforce scenarios:
+### Implementation
 
-- **Field Service**  
-  Capture equipment or site photos.
-
-- **Identity Verification**  
-  Quickly capture a user photo for validation.
-
-- **Case Documentation**  
-  Attach real-time images to a Case or Lead.
-
-- **Inspection Systems**  
-  Capture product condition images.
-
----
-
-## 🛠 Implementation
-
-### HTML Template  
-`webCamImageLwc.html`
+#### `webCamImageLwc.html`
 
 ```html
 <template>
@@ -334,16 +383,17 @@ This component can be used in multiple real-world Salesforce scenarios:
     </lightning-card>
 </template>
 ```
-### JavaScript Template  
-`webCamImageLwc.js`
 
-```Javascript
+#### `webCamImageLwc.js`
+
+```javascript
 import { LightningElement } from 'lwc';
 
 export default class WebCamImageLwc extends LightningElement {
     videoElement;
     imageElement;
     canvasElement;
+
     renderedCallback() {
         this.videoElement = this.template.querySelector('.videoElement');
         this.canvasElement = this.template.querySelector('.canvas');
@@ -355,25 +405,25 @@ export default class WebCamImageLwc extends LightningElement {
             } catch (error) {
                 console.log('error', error);
             }
-        }else{
+        } else {
             console.log('Get user Media is not supported');
         }
     }
     async stopCamera() {
         const video = this.template.querySelector('.videoElement');
-        video.srcObject.getTracks().forEach( (track) => track.stop());
+        video.srcObject.getTracks().forEach((track) => track.stop());
         video.srcObject = null;
         this.hideImageElement();
     }
     captureImage() {
-        if(this.videoElement && this.videoElement.srcObject!=null){
+        if(this.videoElement && this.videoElement.srcObject != null){
             this.canvasElement.height = this.videoElement.videoHeight;
             this.canvasElement.width = this.videoElement.videoWidth;
             const context = this.canvasElement.getContext('2d');
-            context.drawImage(this.videoElement,0,0,this.canvasElement.width,this.canvasElement.height);
+            context.drawImage(this.videoElement, 0, 0, this.canvasElement.width, this.canvasElement.height);
             const imgData = this.canvasElement.toDataURL('image/png');
             const imageElement = this.template.querySelector('.imageElement');
-            imageElement.setAttribute('src',imgData);
+            imageElement.setAttribute('src', imgData);
             imageElement.classList.add('slds-show');
             imageElement.classList.remove('slds-hide');
         }
@@ -386,11 +436,13 @@ export default class WebCamImageLwc extends LightningElement {
 }
 ```
 
-### 📷 Component Preview
-![Image Capturing Lwc Component](./images/image_capture_lwc.png)
+### Preview
+
+![Image Capturing LWC Component](./images/image_capture_lwc.png)
 
 ---
-# 4 LWC Dependent Picklist Component 🌍
+
+## 5. Dependent Picklist Component
 
 | Property | Value |
 |--------|--------|
@@ -399,30 +451,16 @@ export default class WebCamImageLwc extends LightningElement {
 | **Type** | Utility Component |
 | **Description** | A reusable Lightning Web Component that implements a three-level dependent picklist (Country → State → City) using Apex data. The component dynamically enables and disables fields based on the user's selection. |
 
----
+### Use Cases
 
-# 🚀 Use Cases
+- **Address Forms** — Dynamically select Country → State → City.
+- **Customer Registration Systems** — Capture hierarchical location information.
+- **Lead / Account Creation** — Improve data accuracy with dependent selections.
+- **Survey or Data Collection Apps** — Guide users through structured input.
 
-This component can be used in multiple Salesforce scenarios:
+### Implementation
 
-- **Address Forms**  
-  Dynamically select Country → State → City.
-
-- **Customer Registration Systems**  
-  Capture hierarchical location information.
-
-- **Lead / Account Creation**  
-  Improve data accuracy with dependent selections.
-
-- **Survey or Data Collection Apps**  
-  Guide users through structured input.
-
----
-
-# 🛠 Implementation
-
-## HTML Template  
-`dependantPicklistComp.html`
+#### `dependantPicklistComp.html`
 
 ```html
 <template>
@@ -447,10 +485,7 @@ This component can be used in multiple Salesforce scenarios:
 </template>
 ```
 
----
-
-## JavaScript Controller  
-`dependantPicklistComp.js`
+#### `dependantPicklistComp.js`
 
 ```javascript
 import { LightningElement, wire, track } from 'lwc';
@@ -467,23 +502,17 @@ export default class DependantPicklistComp extends LightningElement {
 
     @wire(getLocation)
     wireData({ error, data }) {
-        console.log('hii')
-        console.log('Data:', data);
-        console.log('Error:', error);
         if (data) {
-            console.log('Data fetched successfully:', data);
             this.allData = data;
             this.countryOptions = Object.keys(data).map(item => ({
                 label: item,
                 value: item
             }));
-            console.log('Country Options:', this.countryOptions);
-        }
-        else if (error) {
+        } else if (error) {
             console.error('Error fetching data:', error);
         }
     }
-    
+
     get isStateDisabled() {
         return !this.country;
     }
@@ -514,44 +543,41 @@ export default class DependantPicklistComp extends LightningElement {
 }
 ```
 
----
-
-## Apex Controller  
-`locationController.cls`
+#### `locationController.cls`
 
 ```apex
 public with sharing class locationController {
     @AuraEnabled(cacheable=true)
     public static Map<String,Map<String,List<String>>> getLocation(){
         Map<String,Map<String,List<String>>> data = new Map<String,Map<String,List<String>>>();
-        data.put('india',new map<String,List<String>>{
-            'karnataka'=>new List<String>{'bangalore','mysore','hubli'},
-            'tamilnadu'=>new List<String>{'chennai','coimbatore','madurai'}
+        data.put('india', new Map<String,List<String>>{
+            'karnataka' => new List<String>{'bangalore','mysore','hubli'},
+            'tamilnadu' => new List<String>{'chennai','coimbatore','madurai'}
         });
-        data.put('usa',new map<String,List<String>>{
-            'california'=>new List<String>{'san francisco','los angeles','san diego'},
-            'new york'=>new List<String>{'new york city','buffalo','albany'}
+        data.put('usa', new Map<String,List<String>>{
+            'california' => new List<String>{'san francisco','los angeles','san diego'},
+            'new york'   => new List<String>{'new york city','buffalo','albany'}
         });
-        data.put('uk',new map<String,List<String>>{
-            'england'=>new List<String>{'london','manchester','birmingham'},
-            'scotland'=>new List<String>{'glasgow','edinburgh','dundee'}    
+        data.put('uk', new Map<String,List<String>>{
+            'england'  => new List<String>{'london','manchester','birmingham'},
+            'scotland' => new List<String>{'glasgow','edinburgh','dundee'}
         });
-        data.put('australia',new map<String,List<String>>{
-            'new south wales'=>new List<String>{'sydney','wollongong','perth'},
-            'queensland'=>new List<String>{'brisbane','gold coast','sunshine coast'}
+        data.put('australia', new Map<String,List<String>>{
+            'new south wales' => new List<String>{'sydney','wollongong','perth'},
+            'queensland'      => new List<String>{'brisbane','gold coast','sunshine coast'}
         });
         return data;
     }
 }
 ```
 
----
-
-# 📷 Component Preview
+### Preview
 
 ![Dependent Picklist LWC](./images/dependent_picklist_lwc.png)
 
-# 5 LWC Multi Step Progress Form 🧭
+---
+
+## 6. Multi Step Progress Form
 
 | Property | Value |
 |--------|--------|
@@ -560,32 +586,16 @@ public with sharing class locationController {
 | **Type** | Utility Component |
 | **Description** | A reusable Lightning Web Component that implements a step-based UI workflow using the Lightning Progress Indicator. It allows users to navigate between multiple steps and complete a process sequentially. |
 
----
+### Use Cases
 
-# 🚀 Use Cases
+- **Multi-Step Form Wizards** — Guide users through complex form submissions.
+- **Record Creation Processes** — Create records step by step (Account → Contact → Opportunity).
+- **Checkout or Registration Flows** — Divide long forms into multiple logical steps.
+- **Guided Data Entry Systems** — Ensure users complete required sections before submission.
 
-This component can be used in many Salesforce workflows:
+### Implementation
 
-- **Multi-Step Form Wizards**  
-  Guide users through complex form submissions.
-
-- **Record Creation Processes**  
-  Create records step by step (Account → Contact → Opportunity).
-
-- **Checkout or Registration Flows**  
-  Divide long forms into multiple logical steps.
-
-- **Guided Data Entry Systems**  
-  Ensure users complete required sections before submission.
-
----
-
-# 🛠 Implementation
-
-## Main Container Component
-
-### HTML Template  
-`lwcContainer.html`
+#### Container — `lwcContainer.html`
 
 ```html
 <template>
@@ -634,10 +644,7 @@ This component can be used in many Salesforce workflows:
 </template>
 ```
 
----
-
-### JavaScript Controller  
-`lwcContainer.js`
+#### Container — `lwcContainer.js`
 
 ```javascript
 import { LightningElement } from 'lwc';
@@ -648,12 +655,12 @@ export default class LwcContainer extends LightningElement {
     previousDisabled = true;
     nextDisabled = false;
     isLastStep = false;
+
     handleNext(){
         if(this.currentStep == "1"){
             this.currentStep = "2";
             this.previousDisabled = false;
-        }
-        else if(this.currentStep == "2"){
+        } else if(this.currentStep == "2"){
             this.currentStep = "3";
             this.nextDisabled = true;
             this.isLastStep = true;
@@ -663,8 +670,7 @@ export default class LwcContainer extends LightningElement {
         if(this.currentStep == "2"){
             this.currentStep = "1";
             this.previousDisabled = true;
-        }
-        else if(this.currentStep == "3"){
+        } else if(this.currentStep == "3"){
             this.currentStep = "2";
             this.nextDisabled = false;
             this.isLastStep = false;
@@ -686,16 +692,13 @@ export default class LwcContainer extends LightningElement {
                 message: 'Submitted',
                 variant: 'success',
             })
-        )
+        );
     }
 }
 ```
 
----
+#### Step Components
 
-# Child Step Components
-
-## Step 1 Component  
 `firstStepComp.html`
 
 ```html
@@ -707,9 +710,6 @@ export default class LwcContainer extends LightningElement {
 </template>
 ```
 
----
-
-## Step 2 Component  
 `secondStepComp.html`
 
 ```html
@@ -721,9 +721,6 @@ export default class LwcContainer extends LightningElement {
 </template>
 ```
 
----
-
-## Step 3 Component  
 `thirdStepComp.html`
 
 ```html
@@ -735,8 +732,6 @@ export default class LwcContainer extends LightningElement {
 </template>
 ```
 
----
-
-# 📷 Component Preview
+### Preview
 
 ![Multi Step Progress LWC](./images/multi_step_progress_lwc.png)
